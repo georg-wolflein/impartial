@@ -32,3 +32,9 @@ Features:
 - very **lightweight** (~50 LOC and no dependencies)
 - fully **compatible** with [functools.partial](https://docs.python.org/3/library/functools.html#functools.partial) (`impartial` is a subclass of `functools.partial`)
 - can be used as a **decorator**
+
+To install this package, run:
+
+```
+pip install impartial
+```
