@@ -9,7 +9,9 @@ The main idea is that any `impartial` function gets a method `with_<keyword>(val
 ... def power(x, exponent):
 ...     return x ** exponent
 ...
->>> square = power.with_exponent(2) # basically functools.partial(square, exponent=2)
+>>> power
+impartial(<function power at 0x10d54e790>)
+>>> square = power.with_exponent(2) # behaves like functools.partial(square, exponent=2)
 >>> square
 impartial(<function power at 0x10d54e790>, exponent=2)
 >>> square(3)
@@ -20,6 +22,6 @@ Features:
 
 - the `with_<keyword>(value)` methods can be arbitrarily **chained**
 - `impartial` functions are **immutable**: any "modification" of arguments returns a new `impartial` function
-- very **lightweight** (~50 LOC)
+- very **lightweight** (~50 LOC and no dependencies)
 - fully **compatible** with [functools.partial](https://docs.python.org/3/library/functools.html#functools.partial) (`impartial` is a subclass of `functools.partial`)
 - can be used as a **decorator**

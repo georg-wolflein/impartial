@@ -1,11 +1,22 @@
 [tool.poetry]
 name = "impartial"
 version = "0.1.0"
-description = "A lightweight extension of functools.partial."
+description = "A lightweight extension of functools.partial"
 authors = ["Georg Wölflein <georgw7777@gmail.com>"]
 license = "Apache-2.0"
 packages = [
     { include = "impartial.py" }
+]
+readme = "README.md"
+repository = "https://github.com/georg-wolflein/impartial"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+]
+include = [
+    "LICENSE",
 ]
 
 [tool.poetry.dependencies]
