@@ -1,7 +1,14 @@
 # impartial
 
-A lightweight extension of [functools.partial](https://docs.python.org/3/library/functools.html#functools.partial) that allows modifying positional and keyword arguments in a functional style.
-The main idea is that any `impartial` function gets a method `with_<keyword>(value)` for every keyword argument which returns a new `impartial` function with that keyword being modified.
+[![build](https://github.com/georg-wolflein/impartial/workflows/build/badge.svg)](https://github.com/georg-wolflein/impartial/actions?query=workflow%3Abuild)
+[![PyPI](https://img.shields.io/pypi/v/impartial)](https://pypi.org/project/impartial)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/impartial)](https://pypi.org/project/impartial)
+[![Licence](https://img.shields.io/github/license/georg-wolflein/impartial)](https://github.com/georg-wolflein/impartial/blob/master/LICENSE)
+
+_impartial_ is a lightweight extension of [functools.partial](https://docs.python.org/3/library/functools.html#functools.partial) that allows modifying positional and keyword arguments in a functional style.
+
+The main idea is that any function wrapped with `impartial` gets a method `with_<keyword>(value)` for every keyword argument of that function.
+Each `with_<keyword>(value)` method returns a new `impartial` function with that keyword being modified.
 
 ```python
 >>> import impartial
