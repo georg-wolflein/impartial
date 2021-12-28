@@ -37,7 +37,7 @@ class impartial(partial):
     Fully compatible with functools.partial.
     """
 
-    def __new__(cls, func: typing.Union[typing.Callable, partial, "impartial"], /, *args, **keywords) -> "impartial":
+    def __new__(cls, func: typing.Union[typing.Callable, partial, "impartial"], *args, **keywords) -> "impartial":
         argument_types = None
         if hasattr(func, "func"):
             args = func.args + args
@@ -66,7 +66,7 @@ class impartial(partial):
             setter.__annotations__["value"] = type_hint
         return setter
 
-    def configure(self, /, *args, **keywords) -> "impartial":
+    def configure(self, *args, **keywords) -> "impartial":
         """Set arguments and keyword arguments.
 
         Returns:
