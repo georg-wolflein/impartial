@@ -14,7 +14,7 @@
 import typing
 import inspect
 import sys
-from functools import partial
+from functools import partial, partialmethod
 
 
 def _get_argument_types(func: typing.Callable) -> dict:
@@ -37,7 +37,10 @@ class impartial(partial):
     Fully compatible with functools.partial.
     """
 
-    def __new__(cls, func: typing.Union[typing.Callable, partial, "impartial"], *args, **keywords) -> "impartial":
+    def __new__(cls, func: typing.Union[typing.Callable, partial, "impartial"],
+                *args,
+                _first_arg_is_self: bool = False,
+                **keywords) -> "impartial":
         argument_types = None
         if hasattr(func, "func"):
             args = func.args + args
@@ -50,8 +53,11 @@ class impartial(partial):
             argument_types = _get_argument_types(func)
         self = super().__new__(cls, func, *args, **keywords)
         self.argument_types = argument_types
+        self._first_arg_is_self = _first_arg_is_self
 
         for arg, arg_type in self.argument_types.items():
+            if arg == "self" and self._first_arg_is_self:
+                continue
             func_name = f"with_{arg}"
             setattr(self, func_name,
                     self._make_setter(arg, func_name, arg_type))
@@ -74,5 +80,29 @@ class impartial(partial):
         """
         return self.__class__(self, *args, **keywords)
 
+    def __call__(self, /, *args, **keywords):
+        return super().__call__(*args, **keywords)
 
+
+class impartialmethod(partialmethod):
+    """Equivalent of functools.partialmethod."""
+
+    def __get__(self, obj, cls=None):
+        # Copied from functools.partialmethod, but with a call to impartial() instead of partial()
+        get = getattr(self.func, "__get__", None)
+        result = None
+        if get is not None:
+            new_func = get(obj, cls)
+            if new_func is not self.func:
+                result = impartial(new_func, *self.args, **self.keywords)
+                try:
+                    result.__self__ = new_func.__self__
+                except AttributeError:
+                    pass
+        if result is None:
+            result = self._make_unbound_method().__get__(obj, cls)
+        return result
+
+
+impartial.method = impartialmethod
 sys.modules[__name__] = impartial
