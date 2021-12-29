@@ -80,9 +80,6 @@ class impartial(partial):
         """
         return self.__class__(self, *args, **keywords)
 
-    def __call__(self, /, *args, **keywords):
-        return super().__call__(*args, **keywords)
-
 
 class impartialmethod(partialmethod):
     """Equivalent of functools.partialmethod."""
