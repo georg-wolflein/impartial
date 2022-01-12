@@ -11,7 +11,7 @@ The main idea is that any function wrapped with `impartial` gets a method `with_
 Each `with_<keyword>(value)` method returns a new `impartial` function with that keyword being modified.
 
 ```python
->>> import impartial
+>>> from impartial import impartial
 >>> @impartial
 ... def power(x, exponent):
 ...     return x ** exponent

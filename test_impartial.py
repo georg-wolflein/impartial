@@ -1,9 +1,9 @@
 from functools import partial
 
-import impartial
+from impartial import impartial
 
 
-def f(x, y, z: int = 0):
+def f(x: int, y: int, z: int = 0) -> int:
     return x + 2*y + z
 
 
